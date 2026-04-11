@@ -34,6 +34,7 @@ TechCare uses Tesseract to read prescription images.
 TechCare uses Ollama to run the medical AI locally without sending patient data to the cloud.
 * Download and install **Ollama** from [ollama.com](https://ollama.com/).
 * Open your terminal and pull the BioMistral model by running:
+  
   ```bash
   ollama run biomistral
   ```
