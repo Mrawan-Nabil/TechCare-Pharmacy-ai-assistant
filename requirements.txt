@@ -1,0 +1,15 @@
+# --- Core UI ---
+streamlit>=1.32.0
+
+# --- Data Processing ---
+pandas
+openpyxl       # Required for pandas to read .xlsx batch files
+
+# --- Database & API ---
+chromadb
+requests
+
+# --- AI & Vision ---
+ollama
+pytesseract
+Pillow         # Required for handling image uploads

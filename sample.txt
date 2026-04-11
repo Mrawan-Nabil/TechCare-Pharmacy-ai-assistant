@@ -1,0 +1,16 @@
+CLINICAL PHARMACY GUIDELINES: COMMON MEDICATIONS AND ADVERSE INTERACTIONS
+
+Acetaminophen (Paracetamol) is a widely used analgesic and antipyretic. The absolute maximum daily dose for a healthy adult is 4000mg. Exceeding this limit, or combining it with excessive alcohol consumption, drastically increases the risk of severe hepatotoxicity (liver damage) and acute liver failure.
+
+Aspirin (Acetylsalicylic acid) is a nonsteroidal anti-inflammatory drug (NSAID) used for pain relief and cardiovascular protection. The standard maximum daily dose is 4000mg. However, Aspirin combined with blood thinners like Warfarin significantly increases the risk of major gastrointestinal bleeding. Concurrent use requires strict medical justification and close INR monitoring.
+
+Amoxicillin is a penicillin-class antibiotic used to treat various bacterial infections. The general maximum daily dose for severe infections is 3000mg. Pharmacists must warn patients that Amoxicillin can potentially reduce the effectiveness of oral contraceptives, and a backup non-hormonal birth control method is recommended during the course of the antibiotic.
+
+Warfarin is a Vitamin K antagonist used as an oral anticoagulant. It has a very narrow therapeutic index. Its efficacy and safety are highly sensitive to dietary Vitamin K intake and interactions with numerous other drugs, notably NSAIDs, macrolide antibiotics, and certain antifungals, all of which can dangerously elevate the patient's bleeding risk.
+
+Lisinopril is an ACE inhibitor commonly prescribed for hypertension and heart failure. The maximum daily dose is typically 40mg. Lisinopril can cause hyperkalemia (elevated blood potassium levels). It should be used with extreme caution if the patient is also taking potassium-sparing diuretics like Spironolactone, as the combination can lead to fatal cardiac arrhythmias.
+
+Metformin is the first-line oral treatment for Type 2 Diabetes. The maximum recommended daily dose is 2550mg. While generally safe, Metformin carries a Black Box Warning for lactic acidosis, a rare but potentially fatal metabolic complication. The risk is significantly increased in patients with severe renal impairment or those undergoing radiological studies involving iodinated contrast materials.
+
+Ibuprofen is a common NSAID. The maximum daily over-the-counter dose is 1200mg, but under medical supervision, it can be increased to 3200mg. Long-term use of Ibuprofen at high doses is associated with an increased risk of cardiovascular thrombotic events, myocardial infarction, and stroke, as well as severe gastrointestinal ulceration.
+
