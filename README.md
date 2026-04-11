@@ -107,4 +107,3 @@ techcare/
 ```
 ---
 *Developed for modern pharmacy data governance.*
-```
