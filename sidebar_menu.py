@@ -35,7 +35,7 @@ def ping_database():
 
 # --- MAIN SIDEBAR BUILDER ---
 def draw_sidebar():
-    logo3_path = "assets/logo3_v2.jpg" if os.path.exists("assets/logo3_v2.jpg") else "logo3_v2.jpg"
+    logo3_path = "assets/logo1.png" if os.path.exists("assets/logo1.png") else "logo1.png"
 
     # 1. HIDE THE DEFAULT MENU & FIX TOP SPACING
     st.markdown(
