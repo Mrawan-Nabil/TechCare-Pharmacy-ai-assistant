@@ -13,7 +13,7 @@ draw_sidebar()
 # ==========================================
 # PAGE: ADMIN DASHBOARD & DATABASE INTEGRITY
 # ==========================================
-st.markdown("### 📊 Admin Dashboard & Database Integrity")
+st.markdown("### Admin Dashboard & Database Integrity")
 st.caption("Manage your clinical database and autonomous learning pipeline.")
 
 # Initialize the Conflict Resolution Queue in session state
@@ -21,7 +21,7 @@ if "conflict_queue" not in st.session_state:
     st.session_state.conflict_queue = []
 
 # --- 1. Manual & Excel Upload Boxes ---
-st.markdown("#### 🧠 Teach TechCare New Medications")
+st.markdown("#### Teach TechCare New Medications")
 col_manual, col_excel = st.columns(2)
 
 with col_manual:

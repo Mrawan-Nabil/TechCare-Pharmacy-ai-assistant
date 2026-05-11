@@ -13,3 +13,4 @@ requests
 ollama
 pytesseract
 Pillow         # Required for handling image uploads
+opencv-python  # Required for adaptive thresholding image preprocessing

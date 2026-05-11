@@ -11,6 +11,52 @@ st.set_page_config(
 # --- SHARED SIDEBAR ---
 draw_sidebar()
 
+# --- SIDEBAR TOGGLE: Replace tiny arrow with a visible hamburger icon ---
+st.markdown(
+    """
+    <style>
+    /* ── Sidebar collapse/expand control button ── */
+    [data-testid="collapsedControl"] {
+        /* Make the button larger and pill-shaped */
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: 12px !important;
+        background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%) !important;
+        border: 2px solid rgba(96, 165, 250, 0.6) !important;
+        box-shadow: 0 4px 18px rgba(37, 99, 235, 0.45) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: box-shadow 0.25s ease, transform 0.2s ease !important;
+        cursor: pointer !important;
+        position: relative !important;
+    }
+
+    [data-testid="collapsedControl"]:hover {
+        box-shadow: 0 6px 28px rgba(37, 99, 235, 0.70) !important;
+        transform: scale(1.08) !important;
+    }
+
+    /* Hide the default SVG arrow Streamlit renders */
+    [data-testid="collapsedControl"] svg {
+        display: none !important;
+    }
+
+    /* Inject a ☰ hamburger character as the visible icon */
+    [data-testid="collapsedControl"]::after {
+        content: "☰" !important;
+        font-size: 22px !important;
+        color: #e0f2fe !important;
+        line-height: 1 !important;
+        font-weight: 700 !important;
+        letter-spacing: -1px !important;
+        pointer-events: none !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # --- HOME PAGE CONTENT ---
 st.image("assets/logo2.png", width=170)
 st.title(" Welcome to TechCare")

@@ -10,46 +10,66 @@ def parse_prescription_text(raw_ocr_text):
     print("🧠 [Smart Extractor] Analyzing raw OCR text...")
 
     # 1. The System Prompt: We force the AI to act as a strict JSON converter and medical calculator.
-    system_prompt = """
-    You are an expert medical data extraction API. 
-    Read the provided raw OCR text from a prescription and extract the patient's details and medications.
-    
-    CRITICAL INSTRUCTION FOR DOSAGE:
-    You must calculate the TOTAL DAILY DOSE in milligrams for each medication based on the frequency provided. 
-    Use these standard medical abbreviations to do the math:
-    - Daily / OD = 1 time per day (Multiply pill dose by 1)
-    - BID = 2 times per day (Multiply pill dose by 2)
-    - TID = 3 times per day (Multiply pill dose by 3)
-    - QID = 4 times per day (Multiply pill dose by 4)
-    - q4h = Every 4 hours (Multiply pill dose by 6)
-    - q4-6h = Every 4 to 6 hours (Use the maximum frequency, which is 6 times per day. Multiply pill dose by 6)
-    
-    Example: If the text says "Ibuprofen 600 mg TID", the dose_mg should be 1800 (600 x 3).
-    Example: If the text says "Cephalexin 500 mg QID", the dose_mg should be 2000 (500 x 4).
-    For combo drugs like "Percocet 5/325 mg", use the higher number (325) as the base pill dose.
-
-    You MUST output ONLY a raw JSON object with these exact keys. Do not include markdown, explanations, or backticks:
-    {
-        "patient_age": (integer or null),
-        "patient_gender": (string: "M", "F", or "ALL" - default to "ALL" if unknown),
-        "diagnosis": (string or null),
-        "medical_history": (string or null),
-        "medications": [{
-            "drug_name": "Amoxicillin",
-            "concentration": "500mg", 
-            "frequency": "BID",
-            "total_daily_dose_mg": 1000
-        }]
-    }
-    """
+    system_prompt = (
+        "You are an expert clinical data extractor. Your ONLY job is to extract medical data "
+        "from the provided text into a strict JSON format.\n"
+        "CRITICAL INSTRUCTION: You MUST extract EVERY SINGLE MEDICATION found in the text. "
+        "Do not stop after the first one. Output the medications as a JSON array.\n\n"
+        "CRITICAL INSTRUCTION FOR DOSAGE:\n"
+        "You must calculate the TOTAL DAILY DOSE in milligrams for each medication based on the frequency provided.\n"
+        "Use these standard medical abbreviations to do the math:\n"
+        "- Daily / OD = 1 time per day (Multiply pill dose by 1)\n"
+        "- BID = 2 times per day (Multiply pill dose by 2)\n"
+        "- TID = 3 times per day (Multiply pill dose by 3)\n"
+        "- QID = 4 times per day (Multiply pill dose by 4)\n"
+        "- q4h = Every 4 hours (Multiply pill dose by 6)\n"
+        "- q4-6h = Every 4 to 6 hours (Use the maximum frequency: 6x per day)\n\n"
+        "Example: If the text says 'Ibuprofen 600 mg TID', the total_daily_dose_mg should be 1800 (600 x 3).\n"
+        "Example: If the text says 'Cephalexin 500 mg QID', the total_daily_dose_mg should be 2000 (500 x 4).\n"
+        "For combo drugs like 'Percocet 5/325 mg', use the higher number (325) as the base pill dose.\n\n"
+        "CRITICAL SCHEMA RULES — field isolation is MANDATORY:\n"
+        "1. 'drug_name' MUST contain ONLY the alphabetical name of the medication. "
+        "Do NOT include any numbers, dosages, strengths, or frequency abbreviations in this field. "
+        "WRONG: 'Ibuprofen 600 mg TID'  |  CORRECT: 'Ibuprofen'\n"
+        "WRONG: 'Cephalexin 500mg QID'  |  CORRECT: 'Cephalexin'\n"
+        "WRONG: 'Percocet 5/325'        |  CORRECT: 'Percocet'\n"
+        "2. 'concentration' MUST contain ONLY the strength per pill or unit (e.g., '600 mg', '500 mg', '5/325 mg'). "
+        "Do NOT include the drug name or frequency here.\n"
+        "3. 'frequency' MUST contain ONLY the timing or administration instruction "
+        "(e.g., 'TID', 'BID', 'q4-6h', 'once daily'). "
+        "Do NOT include the drug name, dose, or strength here.\n\n"
+        "Use this exact JSON schema — output ONLY raw JSON, no markdown, no backticks, no explanations:\n"
+        '{\n'
+        '  "patient_age": "integer or null",\n'
+        '  "patient_gender": "M, F, or ALL — default ALL if unknown",\n'
+        '  "diagnosis": "string or null",\n'
+        '  "medical_history": "string or null",\n'
+        '  "medications": [\n'
+        '    {\n'
+        '      "drug_name": "alphabetical name only — NO numbers or frequencies",\n'
+        '      "concentration": "strength per unit only — e.g. 600 mg",\n'
+        '      "frequency": "timing only — e.g. TID, BID, q4-6h",\n'
+        '      "total_daily_dose_mg": "integer"\n'
+        '    }\n'
+        '  ]\n'
+        '}'
+    )
 
     user_prompt = f"Raw OCR Text:\n{raw_ocr_text}"
 
     try:
-        response = ollama.chat(model='biomistral', messages=[
-            {'role': 'system', 'content': system_prompt},
-            {'role': 'user', 'content': user_prompt}
-        ], format='json') # Forcing JSON format output is a great feature in Ollama
+        response = ollama.chat(
+            model='biomistral',
+            messages=[
+                {'role': 'system', 'content': system_prompt},
+                {'role': 'user', 'content': user_prompt},
+            ],
+            format='json',          # Force structured JSON output
+            options={
+                'num_predict': 1000, # Allow enough tokens for all medications
+                'temperature': 0.1,  # Near-deterministic — reduces hallucinations
+            },
+        )
 
         # 2. Extract and clean the AI's text response
         ai_output = response['message']['content'].strip()
