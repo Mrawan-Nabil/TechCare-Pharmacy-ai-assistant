@@ -12,5 +12,7 @@ requests
 # --- AI & Vision ---
 ollama
 pytesseract
+easyocr        # Deep-learning OCR for handwritten prescriptions
+numpy          # Required by EasyOCR — image arrays passed to readtext()
 Pillow         # Required for handling image uploads
-opencv-python  # Required for adaptive thresholding image preprocessing
+opencv-python  # Required for adaptive thresholding image preprocessing

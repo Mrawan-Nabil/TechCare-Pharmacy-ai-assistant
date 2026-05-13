@@ -63,7 +63,9 @@ def draw_sidebar():
         st.page_link("app.py", label="Home", icon="🏠")
         st.page_link("pages/1_🔬_Live_Scanner.py", label="Live Scanner", icon="🔬")
         st.page_link("pages/2_💬_Clinical_Chatbot.py", label="Clinical Chatbot", icon="💬")
+        st.page_link("pages/4_📝_Handwriting_Scanner.py", label="Handwriting Scanner", icon="📝")
         st.page_link("pages/3_📊_Admin_Dashboard.py", label="Admin Dashboard", icon="📊")
+
 
         # 5. THE LIVE STATUS BOXES
         st.divider()
